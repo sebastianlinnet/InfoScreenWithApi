@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="script.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.2/axios.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <title>Infoskærm</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="row">
+            <div class="col-sm-6" id="leftScreen">
+                <div class="activitiesHead">
+                    <!-- <h1>Velkommen til</h1> -->
+                    <h1>Røde Kors Landskontor</h1>
+                    <h2 style="color:rgb(201, 0, 0)">{{currentDate()}}</h2>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <img src="imgs/Hovedlogo.png" style="height: 80px; width: auto; margin: 40px;">
+                </div>
+                <div class="activities">
+                    <table class="table table-borderless" v-if="infoScreen.length">
+                        <tr v-for="screen in sortedScreens">
+                            <td>
+                                <p style="color:rgb(201, 0, 0)">{{screen.time}}</p>
+                            </td>
+                            <td>
+                                <p style="font-weight: bold;">{{screen.title}}</p>
+                                <p style="font-style: italic; font-size: 1.2em;">{{screen.comment}}</p>
+                            </td>
+                            <td>
+                                <p>{{screen.room}}</p>
+                            </td>
+                        </tr>
+                    </table>
+                    <p v-else style="font-style: italic;">Ingen planlagte aktiviteter idag</p>
+                </div>
+            </div>
+            <div class="col-sm-6" id="rightScreen" style="padding: 0;">
+                <div class="container-img" style="padding: 0;">
+                    <div class="overlay"></div>
+                    <img src="imgs/Beredskab1221.jpg" class="slides">
+                    <img src="imgs/KB059.jpg" class="slides">
+                    <img src="imgs/p-SYR0852.jpg" class="slides">
+                    <img src="imgs/rk-modelbillede-førstehjælp-credit-petersørensen-1.jpg" class="slides">
+                    <img src="imgs/RK-modelfoto-nørklere-9.jpg" class="slides">
+                    <img src="imgs/samarit077.jpg" class="slides">
+                    <img src="imgs/Uddeling3.jpg" class="slides">
+                    <img src="imgs/RK226.jpg" class="slides">
+                    <img src="imgs/Uddeling3.jpg" class="slides">
+                    <img src="imgs/p-GRC2116.jpg" class="slides">
+                    <img src="imgs/Helene_parat_callcenter.png" class="slides">
+                    <img src="imgs/Håndarbejde.jpg" class="slides">
+                    <img src="imgs/Sandholm3_Credit_Peter_Sørensen.jpg" class="slides">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="inputInfoScreen">
+                        <p style="font-weight: bold;">OPRET</p>
+                        <p class="paragraph">Vælg tidspunkt:</p>
+                        <input v-model="newInfoScreen.time" placeholder="Tid" type="time" /><br><br>
+                        <p class="paragraph">Tilføj titel:</p>
+                        <input v-model="newInfoScreen.title" placeholder="Titel" type="text" style="width: 300px;"/><br><br>
+                        <p class="paragraph">Vælg lokale:</p>
+                        <select v-model="newInfoScreen.room" style="width: 300px;">
+                            <option value=""></option>
+                            <option value="Frivillighuset">Frivillighuset</option>
+                            <option value="Dunant">Dunant</option>
+                            <option value="Dybbøl">Dybbøl</option>
+                            <option value="Kongelunden">Kongelunden</option>
+                            <option value="Medmenneskelighed">Medmenneskelighed</option>
+                            <option value="1876">1876</option>
+                            <option value="Solferino">Solferino</option>
+                        </select>
+                        <br><br>
+                        <p class="paragraph">Tilføj evt. kommentar:</p>
+                        <textarea v-model="newInfoScreen.comment" placeholder="Kommentar" rows="5" style="width: 300px;"></textarea><br><br>
+                        <button v-on:click="addInfoScreen()" class="btn btn-success"><strong>OPRET</strong></button><br>
+                        {{addMessage}}
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="inputInfoScreen">
+                        <p style="font-weight: bold;">OPDATER</p>
+                        <p class="paragraph">Vælg en post du vil opdatere:</p>
+                        <select v-model="updateData" style="width: 300px;">
+                            <option v-for="post in infoScreen" v-bind:value="post">{{post.time}} - {{post.title}} -
+                                {{post.room}}</option>
+                        </select><br><br>
+                        <p class="paragraph">Opdater tidspunkt:</p>
+                        <input v-model="updateData.time" placeholder="tid" type="time" /><br><br>
+                        <p class="paragraph">Opdater titel:</p>
+                        <input v-model="updateData.title" placeholder="Titel" type="text" style="width: 300px;" /><br><br>
+                        <p class="paragraph">Opdater lokale:</p>
+                        <select v-model="updateData.room" placeholder="lokale" style="width: 300px;">
+                            <option value=""></option>
+                            <option value="Frivillighuset">Frivillighuset</option>
+                            <option value="Dunant">Dunant</option>
+                            <option value="Dybbøl">Dybbøl</option>
+                            <option value="Kongelunden">Kongelunden</option>
+                            <option value="Medmenneskelighed">Medmenneskelighed</option>
+                            <option value="1876">1876</option>
+                            <option value="Solferino">Solferino</option>
+                        </select><br><br>
+                        <p class="paragraph">Opdater kommentar:</p>
+                        <textarea v-model="updateData.comment" placeholder="Kommentar" rows="5" style="width: 300px;"></textarea><br><br>
+                        <button v-on:click="updateInfoScreen()" class="btn btn-warning"><strong>OPDATER</strong></button><br>
+                        {{updateMessage}}
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="inputInfoScreen">
+                        <p style="font-weight: bold;">SLET</p>
+                        <p class="paragraph">Vælg en post du vil slette:</p>
+                        <select v-model="deleteData" style="width: 300px;">
+                            <option v-for="post in infoScreen" v-bind:value="post">{{post.time}} - {{post.title}} - {{post.room}}</option>
+                        </select><br><br>
+                        <button v-on:click="deletePost()" class="btn btn-danger"><strong>SLET</strong></button><br>
+                        {{deleteMessage}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
