@@ -1,23 +1,24 @@
 //const baseUrl = "https://localhost:7013/api/InfoScreen"
-const baseUrl = "https://infoscreenapi20230104102109.azurewebsites.net/api/infoscreen"
+const baseUrl = "https://infoscreenapi20230302160543.azurewebsites.net/api/infoscreen"
 
 Vue.createApp({
     data() {
         return {
             infoScreen: [],
-            newInfoScreen: { id: 0, time: "", room: "", title: "", comment: "" },
+            newInfoScreen: { id: 0, date: "", time: "", room: "", title: ""},
             addMessage: "",
-            updateData: { id: null, time: null, room: null, title: null, comment: null},
+            updateData: { id: null, date: null, time: null, room: null, title: null},
             updateMessage: "",
-            deleteData: { id: null, time: null, room: null, title: null, comment: null },
+            deleteData: { id: null, date: null, time: null, room: null, title: null},
             post: 0,
             deleteMessage: "",
             index: 0,
+            //modal: false,
         }
     },
     methods: {
         getInfoScreen() {
-            this.getInfoScreenHelper(baseUrl)
+                this.getInfoScreenHelper(baseUrl)
         },
         async getInfoScreenHelper(url) {
             try {
@@ -34,10 +35,10 @@ Vue.createApp({
                 response = await axios.post(baseUrl, this.newInfoScreen)
                 this.addMessage = "Posten er tilføjet til infoskærmen"
                 setTimeout(function() {this.addMessage = ""}.bind(this), 2000)
+                this.newInfoScreen.date = ""
                 this.newInfoScreen.time = ""
                 this.newInfoScreen.room = ""
                 this.newInfoScreen.title = ""
-                this.newInfoScreen.comment = ""
                 this.getInfoScreen()
             }
             catch (ex) {
@@ -50,10 +51,10 @@ Vue.createApp({
                 response = await axios.put(url, this.updateData)
                 this.updateMessage = "Posten er rettet på infoskærmen"
                 setTimeout(function() {this.updateMessage = ""}.bind(this), 2000)
+                this.updateData.date = ""
                 this.updateData.time = ""
                 this.updateData.room = ""
                 this.updateData.title = ""
-                this.updateData.comment = ""
                 this.getInfoScreen()
             }
             catch (ex) {
@@ -69,7 +70,6 @@ Vue.createApp({
                 this.updateData.time = ""
                 this.updateData.room = ""
                 this.updateData.title = ""
-                this.updateData.comment = ""
                 this.getInfoScreen()
             }
             catch (ex) {
@@ -92,15 +92,29 @@ Vue.createApp({
             months[10] = "november";
             months[11] = "december";
             const current_date = new Date();
+            const weekday = ["Søndag","Mandag","Tirsdag","Onsdag","Torsdag","Fredag","Lørdag"];
+            const d = new Date();
+            let day = weekday[d.getUTCDay()];
             month_value = current_date.getMonth();
-            const date = `${current_date.getDate()}. ${months[month_value]}, ${current_date.getFullYear()}`;
+            const date = `${day} den. ${current_date.getDate()}. ${months[month_value]}, ${current_date.getFullYear()}`;
             return date;
           },
     },
     computed: {
+        // sortedDates() {
+        //     function sorted(infoScreen, currentdate) {
+        //         var currentdate = new Date(); 
+        //         if(infoScreen.Date != currentdate.getDate())
+        //         {
+        //             return 0
+        //         }
+        //         return this.infoScreen.sorted()
+        //     }
+        // },
         //Sortér opslag på tidspunkt, tidligt til sent
         sortedScreens() {
           function compare(a, b) {
+            // let today = new Date().toISOString().slice(0, 10)
             if (a.time < b.time)
               return -1;
             if (a.time > b.time)

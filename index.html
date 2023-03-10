@@ -19,12 +19,16 @@
 
 <body>
     <div id="app">
+        <!-- <div class="bgModal">
+            <div class="infoModal">
+                <h1>Lorem ipsum</h1>
+            </div>
+        </div> -->
         <div class="row">
             <div class="col-sm-6" id="leftScreen">
                 <div class="activitiesHead">
-                    <!-- <h1>Velkommen til</h1> -->
-                    <h1>Røde Kors Landskontor</h1>
-                    <h2 style="color:rgb(201, 0, 0)">{{currentDate()}}</h2>
+                    <h1>Velkommen til Røde Kors</h1>
+                    <h2>{{currentDate()}}</h2>
                 </div>
                 <div style="display: flex; justify-content: center;">
                     <img src="imgs/Hovedlogo.png" style="height: 80px; width: auto; margin: 40px;">
@@ -33,11 +37,10 @@
                     <table class="table table-borderless" v-if="infoScreen.length">
                         <tr v-for="screen in sortedScreens">
                             <td>
-                                <p style="color:rgb(201, 0, 0)">{{screen.time}}</p>
+                                <p>{{screen.time}}</p>
                             </td>
                             <td>
                                 <p style="font-weight: bold;">{{screen.title}}</p>
-                                <p style="font-style: italic; font-size: 1.2em;">{{screen.comment}}</p>
                             </td>
                             <td>
                                 <p>{{screen.room}}</p>
@@ -71,6 +74,8 @@
                 <div class="col-sm-4">
                     <div class="inputInfoScreen">
                         <p style="font-weight: bold;">OPRET</p>
+                        <!-- <p class="paragraph">Vælg dato:</p>
+                        <input v-model="newInfoScreen.date" placeholder="Dato" type="date"><br><br> -->
                         <p class="paragraph">Vælg tidspunkt:</p>
                         <input v-model="newInfoScreen.time" placeholder="Tid" type="time" /><br><br>
                         <p class="paragraph">Tilføj titel:</p>
@@ -87,8 +92,6 @@
                             <option value="Solferino">Solferino</option>
                         </select>
                         <br><br>
-                        <p class="paragraph">Tilføj evt. kommentar:</p>
-                        <textarea v-model="newInfoScreen.comment" placeholder="Kommentar" rows="5" style="width: 300px;"></textarea><br><br>
                         <button v-on:click="addInfoScreen()" class="btn btn-success"><strong>OPRET</strong></button><br>
                         {{addMessage}}
                     </div>
@@ -101,6 +104,8 @@
                             <option v-for="post in infoScreen" v-bind:value="post">{{post.time}} - {{post.title}} -
                                 {{post.room}}</option>
                         </select><br><br>
+                        <!-- <p class="paragraph">Opdater dato:</p>
+                        <input v-model="updateData.date" placeholder="Dato" type="date"><br><br> -->
                         <p class="paragraph">Opdater tidspunkt:</p>
                         <input v-model="updateData.time" placeholder="tid" type="time" /><br><br>
                         <p class="paragraph">Opdater titel:</p>
@@ -116,8 +121,6 @@
                             <option value="1876">1876</option>
                             <option value="Solferino">Solferino</option>
                         </select><br><br>
-                        <p class="paragraph">Opdater kommentar:</p>
-                        <textarea v-model="updateData.comment" placeholder="Kommentar" rows="5" style="width: 300px;"></textarea><br><br>
                         <button v-on:click="updateInfoScreen()" class="btn btn-warning"><strong>OPDATER</strong></button><br>
                         {{updateMessage}}
                     </div>
