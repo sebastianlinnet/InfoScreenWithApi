@@ -101,8 +101,7 @@
                         <p style="font-weight: bold;">OPDATER</p>
                         <p class="paragraph">Vælg en post du vil opdatere:</p>
                         <select v-model="updateData" style="width: 300px;">
-                            <option v-for="post in infoScreen" v-bind:value="post">{{post.time}} - {{post.title}} -
-                                {{post.room}}</option>
+                            <option v-for="post in infoScreen" v-bind:value="post">{{post.time}} - {{post.title}} - {{post.room}}</option>
                         </select><br><br>
                         <!-- <p class="paragraph">Opdater dato:</p>
                         <input v-model="updateData.date" placeholder="Dato" type="date"><br><br> -->
