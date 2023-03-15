@@ -83,13 +83,19 @@
                         <p class="paragraph">Vælg lokale:</p>
                         <select v-model="newInfoScreen.room" style="width: 300px;">
                             <option value=""></option>
-                            <option value="Frivillighuset">Frivillighuset</option>
-                            <option value="Dunant">Dunant</option>
-                            <option value="Dybbøl">Dybbøl</option>
-                            <option value="Kongelunden">Kongelunden</option>
-                            <option value="Medmenneskelighed">Medmenneskelighed</option>
-                            <option value="1876">1876</option>
-                            <option value="Solferino">Solferino</option>
+                            <option value="1876 (lok.103, 8 pers)">1876 (lok.103, 8 pers)</option>
+                            <option value="De hvide busser (lok.107, 8 pers)">De hvide busser (lok.107, 8 pers)</option>
+                            <option value="Dunant (lok.202, 150 pers)">Dunant (lok.202, 150 pers)</option>
+                            <option value="Dybbøl (lok.105, 12 pers)">Dybbøl (lok.105, 12 pers)</option>
+                            <option value="Frivillighed (frivillighus/pers.30)">Frivillighed (frivillighus/pers.30)</option>
+                            <option value="Jutlandia (lok.101/pers.24)">Jutlandia (lok.101/pers.24)</option>
+                            <option value="Kantinen (lok.100)">Kantinen (lok.100)</option>
+                            <option value="Kongelunden (lok.141/pers.6)">Kongelunden (lok.141/pers.6)</option>
+                            <option value="Medmenneskelighed (frivillighus/pers. 82-149)">Medmenneskelighed (frivillighus/pers. 82-149)</option>
+                            <option value="Neutralitet (frivillighus/pers.24)">Neutralitet (frivillighus/pers.24)</option>
+                            <option value="Solferino (lok.214/pers.14)">Solferino (lok.214/pers.14)</option>
+                            <option value="Uafhængighed (frivillighus/pers.5)">Uafhængighed (frivillighus/pers.5)</option>
+                            <option value="Upartiskhed (frivillighus/pers.5)">Upartiskhed (frivillighus/pers.5)</option>
                         </select>
                         <br><br>
                         <button v-on:click="addInfoScreen()" class="btn btn-success"><strong>OPRET</strong></button><br>
@@ -112,13 +118,19 @@
                         <p class="paragraph">Opdater lokale:</p>
                         <select v-model="updateData.room" placeholder="lokale" style="width: 300px;">
                             <option value=""></option>
-                            <option value="Frivillighuset">Frivillighuset</option>
-                            <option value="Dunant">Dunant</option>
-                            <option value="Dybbøl">Dybbøl</option>
-                            <option value="Kongelunden">Kongelunden</option>
-                            <option value="Medmenneskelighed">Medmenneskelighed</option>
-                            <option value="1876">1876</option>
-                            <option value="Solferino">Solferino</option>
+                            <option value="1876 (lok.103, 8 pers)">1876 (lok.103, 8 pers)</option>
+                            <option value="De hvide busser (lok.107, 8 pers)">De hvide busser (lok.107, 8 pers)</option>
+                            <option value="Dunant (lok.202, 150 pers)">Dunant (lok.202, 150 pers)</option>
+                            <option value="Dybbøl (lok.105, 12 pers)">Dybbøl (lok.105, 12 pers)</option>
+                            <option value="Frivillighed (frivillighus/pers.30)">Frivillighed (frivillighus/pers.30)</option>
+                            <option value="Jutlandia (lok.101/pers.24)">Jutlandia (lok.101/pers.24)</option>
+                            <option value="Kantinen (lok.100)">Kantinen (lok.100)</option>
+                            <option value="Kongelunden (lok.141/pers.6)">Kongelunden (lok.141/pers.6)</option>
+                            <option value="Medmenneskelighed (frivillighus/pers. 82-149)">Medmenneskelighed (frivillighus/pers. 82-149)</option>
+                            <option value="Neutralitet (frivillighus/pers.24)">Neutralitet (frivillighus/pers.24)</option>
+                            <option value="Solferino (lok.214/pers.14)">Solferino (lok.214/pers.14)</option>
+                            <option value="Uafhængighed (frivillighus/pers.5)">Uafhængighed (frivillighus/pers.5)</option>
+                            <option value="Upartiskhed (frivillighus/pers.5)">Upartiskhed (frivillighus/pers.5)</option>
                         </select><br><br>
                         <button v-on:click="updateInfoScreen()" class="btn btn-warning"><strong>OPDATER</strong></button><br>
                         {{updateMessage}}
